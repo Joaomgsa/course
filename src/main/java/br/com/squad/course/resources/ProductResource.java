@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/products")
+@RequestMapping(value = "/products")
 public class ProductResource {
 
     @Autowired
-    ProductService service;
+    private ProductService service;
 
     @GetMapping
     public ResponseEntity<List<Product>> findAll(){

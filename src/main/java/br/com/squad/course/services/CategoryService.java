@@ -12,7 +12,7 @@ import java.util.Optional;
 public class CategoryService {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     public List<Category> findAll() {
         return categoryRepository.findAll();
