@@ -1,18 +1,34 @@
 package br.com.squad.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
-public class Payment {
-    private long id;
+@Entity
+@Table(name = "tb_payment")
+public class Payment implements Serializable {
+
+    public static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private Instant moment;
+    @JsonIgnore
+    @OneToOne
+    @MapsId
+    private Order order;
 
     public Payment() {
     }
 
-    public Payment(long id, Instant moment) {
+    public Payment(Long id, Instant moment, Order order) {
         this.id = id;
         this.moment = moment;
+        this.order = new Order();
     }
 
     public long getId() {
@@ -31,17 +47,25 @@ public class Payment {
         this.moment = moment;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return id == payment.id && Objects.equals(moment, payment.moment);
+        return id == payment.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, moment);
+        return Objects.hash(id);
     }
 }
 
